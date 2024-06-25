@@ -50,11 +50,11 @@ const setBuyerNotificationHandler = function (contactEmail) {
 
 exports.registerNewSubscriber = async (event) => {
   const {
-    regToken, companyName, contactPerson, contactPhone, contactEmail,
+    regToken, firstName, lastName, contactEmail, phoneNumber, companyName, jobTitle, countryName, stateProv,
   } = JSON.parse(event.body);
 
   // Validate the request
-  if (regToken && companyName && contactPerson && contactPhone && contactEmail) {
+  if (regToken && firstName && lastName && contactEmail && phoneNumber && companyName && jobTitle && countryName && stateProv) {
     try {
       // Call resolveCustomer to validate the subscriber
       const resolveCustomerParams = {
@@ -73,10 +73,14 @@ exports.registerNewSubscriber = async (event) => {
       const dynamoDbParams = {
         TableName: newSubscribersTableName,
         Item: {
-          companyName: { S: companyName },
-          contactPerson: { S: contactPerson },
-          contactPhone: { S: contactPhone },
+          firstName: { S: firstName },
+          lastName: { S: lastName },
           contactEmail: { S: contactEmail },
+          phoneNumber: { S: phoneNumber },
+          companyName: { S: companyName },
+          jobTitle: { S: jobTitle },
+          countryName: { S: countryName },
+          stateProv: { S: stateProv },
           customerIdentifier: { S: CustomerIdentifier },
           productCode: { S: ProductCode },
           customerAWSAccountID: { S: CustomerAWSAccountId },          
